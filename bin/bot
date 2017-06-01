@@ -1,0 +1,8 @@
+#!/bin/bash
+
+SCRIPT_PATH="`dirname \"$0\"`"
+echo $SCRIPT_PATH
+
+TIMESTAMP=$(date "+%Y.%m.%d.%H.%M.%S")
+python $SCRIPT_PATH/../src/main.py "$@" 
+		 
