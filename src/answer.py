@@ -2,7 +2,9 @@
  
 from bs4 import BeautifulSoup
 import requests
+import os
 import sys
+import subprocess
 
 def sanitize(text):
     chars_to_remove = [" ", "'", '"']
@@ -22,7 +24,7 @@ def quora(query):
 
     html = [] 
     for p in paragraphs:
-        html.append(p.decode_contents(formatter="html").replace("&nbsp;","")[:200])
+        html.append(p.decode_contents(formatter="html").replace("&nbsp;",""))
     print("This is what I found:")
     print(html)
 
@@ -34,6 +36,12 @@ def quora(query):
             break
         response = " ".join([response, line])
 
+    return response
+
+def reverb(query):
+    source_dir = os.path.dirname(__file__)
+    sparql_query = "select ?s where {?s ?p ?o} limit 10"
+    response = subprocess.check_output(["bash", source_dir + "/sparql.sh", sparql_query]).decode('utf-8')
     return response
 
 if __name__ == "__main__":
