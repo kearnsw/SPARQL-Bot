@@ -1,7 +1,10 @@
+#!/usr/bin/env python
+
 import pandas as pd
 import rdflib
+import sys
 
-data =pd.read_csv("../data/reverb_wikipedia_tuples-1.1.txt", delimiter="\t", names=["id", "arg1", "pred", "arg2", "arg1_norm", "pred_norm", "arg2_norm", "count", "confidence", "urls"])
+data = pd.read_csv(sys.argv[1], delimiter="\t", names=["id", "arg1", "pred", "arg2", "arg1_norm", "pred_norm", "arg2_norm", "count", "confidence", "urls"])
 
 g = rdflib.Graph()
 
@@ -9,9 +12,10 @@ g = rdflib.Graph()
 
 def clean(s):
     s = str(s)
-    chars_to_remove = ["&", "+", "=", "`", "~", "'", '"', "@", "*", "!", "#", "^", "-", "$", ",", ".", " ", "/", "\\", "%"]
+    chars_to_remove = ["&", "+", "=", "`", "~", "'", '"', "@", "*", "!", "#", "^", "-", "$", ",", ".", "/", "\\", "%"]
     for char in chars_to_remove:
-        s = s.replace(char, "") 
+        s = s.replace(char, "")
+    s = s.replace(" ", "_").lower()
     return "reverbDB:" + s
 
 print("@prefix reverbDB: <http://www.kearnsw.com/> .")

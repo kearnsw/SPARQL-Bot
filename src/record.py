@@ -1,15 +1,15 @@
 #!/usr/bin/env python
 
 import speech_recognition as sr
-
-# obtain path to "english.wav" in the same folder as this script
 from os import path
 AUDIO_FILE = path.join(path.dirname(path.realpath(__file__)), "english.wav")
 
+
 def listen():
-    # use the audio file as the audio source
+    print("I'm recording")
     r = sr.Recognizer()
-    with sr.Microphone(device_index=4) as source:
+    with sr.Microphone(device_index=12) as source:
+            r.adjust_for_ambient_noise(source)
             print("Say something!")
             audio = r.listen(source)
 
@@ -23,4 +23,4 @@ def listen():
         print("Could not request results from Google Speech Recognition service; {0}".format(e))
 
 if __name__ == "__main__":
-    print(record())
+    print(listen())
