@@ -1,7 +1,7 @@
 \documentclass[11pt]{article}
 \usepackage{acl2017}
 \aclfinalcopy
-\title{SPARQL Bot: a Spoken Dialog System for Knowledge Base Generation, Querying, and Inference}
+\title{SPARQL Bot: a Spoken Dialog System for Knowledge Base Generation and Querying}
 \author{Will Kearns \\ 
 University of Washington \\ 
 kearnsw@uw.edu}
@@ -9,9 +9,100 @@ kearnsw@uw.edu}
 \maketitle
 
 \section{Introduction}
-Knowledge Base generation and maintenance is often a time consuming task that prohibits long-term use of these resources. SPARQL Bot is a project that seeks to alleviate some of the repetitive overhead of curating these resources by accepting natural language commands to add to, and amend an ontology. 
+The Resource Description Framework (RDF) was developed by the World Wide Web Consortium (W3C) as a standard to semantically link knowledge on the web. It was initially published in 1999 and has become the most widely used language for knowledge storage and interchange.
+ 
+Freebase was launched in 2007 as a community constructed knowledge base. \cite{freebase} This database was shutdown in 2015 in order to consolidate with the Wikidata project another community constructed knowledge base of over 26 million data items.
+
+SPARQL Bot is a simple attempt to create, modify, and query ontologies. It uses a combination of named entity recognition, regular expression matching, and keywords. 
 
 \section{Background}
+RDF triple stores easily allow for the addition/merging of new triples without duplication. This is beneficial when telling the system something that it already knows as part of a multipart addition.
+
+There have been prior attempts to acquire knowledge from users using natural languag. \cite{Pappu2014}
+
+\section{System Commands}
+The system has a few functionality that will be described in this section. The system makes use of a keyword system for dialog management. These keywords are stored in text files and read in once by the system at initialization. The benefit of this approach is that these keywords can be modified at any time either as the system develops and we analyze user utterances or by the user themselves.
+ 
+\subsection{Adding}
+The system allows a user to add triples to an RDF triple store using the default keywords "add" and "remember". For example:
+
+\noindent {\tt User: Add John Glenn is an astronaut.}
+
+\noindent {\tt System: I heard you say that you wanted to add <user query> to your database, is that correct?}
+
+\noindent {\tt User: Yes, that's correct.}
+
+\noindent {\tt System: Ok, I have added that to your <database name> database.}
+
+For convenience, the system allows the user to specify multiple predicate object pairs for one subject using the "and" conjunction. For example:
+
+\noindent {\tt User: Remember John Glenn is from Florida and is a Republican.}
+
+\subsection{Removing}
+Sometimes a user realizes a mistake and needs to remove a triple from the data store. This can be done using the command "forget", "remove", or "delete". For example:
+
+\noindent {\tt User: Forget John Glenn is a Republican.}
+
+\noindent {\tt System: Are you sure you want to remove John Glenn is a Republican? This cannot be undone.}
+
+\noindent {\tt User: Yes, I'm sure.}
+
+\noindent {\tt System: Ok, I've removed that from your <database name> database.}
+
+\subsection{Querying}
+The system allows for writing SPARQL queries using a natural language syntax. Using question keywords. For example:
+
+\noindent {\tt User: Who is an astronaut and is a senator?}
+
+\noindent {\tt System: John Glenn is an astronaut and is a senator.}
+
+To get all information about an entity the user can use the "describe" keyword. For example:
+
+\noindent {\tt User: Describe John Glenn.}
+
+\noindent {\tt System: John Glenn is an astronaut and is a senator and is from Florida.}
 
 \section{Results}
+Several tests were ran on the ReVerb ClueWeb extraction.\cite{ReVerb2011}. These were too slow running on my laptop for use in a dialog system, so a smaller sample of Wikipedia extractions was used (data available at http://reverb.cs.washington.edu/). However, in these databases the entity to predicate ratio is very low meaning that it is hard to find a use case for query that will return more than one entity. For example:
+
+\noindent {\tt User: Where is just east of England}
+
+\noindent {\tt System: The Netherlands is just east of England}
+
+Examples like this are very prevalent and not just due to incompleteness of the sample, but also due to the lack of normalization of the predicates. That is, "is just east of" is different than "is east of". Finally, since this information comes from the web much of it is inaccurate. This defeats the purpose of this knowledge based approach and a statistical text summarization method would be more appropriate.
+
+For these reasons, I decided to abandon those two resources and focus primarily on the creation and editing of knowledge bases by voice.
+
+\section{Limitations}
+This work requires a restrictive syntax and is sensitive to changes in predicate argument structure. This can often make queries awkward to speak when using a RDF triple store developed not using natural language. For example using Wikidata knowledge graph:
+
+\noindent {\tt User: Who educated at Yale University and position held President}
+
+This is a severe limitation because one of the powerful aspects of SPARQL is its ability to run federated queries across multiple knowledge bases and most of these are not developed using natural language. This can lead to additional scalability issues when having to adjust syntactic rules for each knowledge base separately.
+
+Fortunately, for most manually curated knowledge bases the number of predicates is relatively small compared to the number of entities and therefore it may be possible to match the predicate extracted from a natural language query to the list of predicates from the knowledge base. This was prohibitive in my system due to speed, but seems that it would be feasible if the database was separated over several nodes and queries could therefore be run concurrently. 
+
+Additionally, the system only handles multiple word entities recognized by the Stanford NER caseless model. Otherwise, the system only handles single word entities. Sometimes, this model can be inconsistent with 
+
+The speech recognition software used is also not sensitive to biomedical terms and therefore is unsuitable for querying biomedical ontologies.
+
+\section{Future Directions}
+This program would benefit from the use of a commercially available speech recognition system with support for biomedical terms. This would allow the system to leverage existing ontologies available through bioportal, e.g. the UniProt database.
+
+Semantic Role Labeling is an essential subtask to development of this type of system as it would allow for more fine-grained argument structures and automatic classing of actors. I looked into EasySRL for this, but have yet to hear back from the authors regarding a missing jar file.\cite{lewis2015}
+
+\section{Dependencies}
+This program uses several third-party libraries and software:
+\begin{itemize}
+\item Stanford NER (caseless model)
+\item Natural Language Toolkit (python)
+\item Stardog 5 (SPARQL endpoint)
+\item gTTS, Google Text-To-Speech (python)
+\item SpeechRecognizer (python)
+
+\end{itemize}
+
+\bibliographystyle{acl_natbib}
+\bibliography{sparql_bot.bib}
+
 \end{document}

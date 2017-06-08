@@ -1,5 +1,43 @@
-required packages
+   _____                        __   ____        __ 
+  / ___/____  ____ __________ _/ /  / __ )____  / /_
+  \__ \/ __ \/ __ `/ ___/ __ `/ /  / __  / __ \/ __/
+ ___/ / /_/ / /_/ / /  / /_/ / /  / /_/ / /_/ / /_  
+/____/ .___/\__,_/_/   \__, /_/  /_____/\____/\__/  
+    /_/                  /_/               
 
-sox 
-pandas
+======================================================================
+
+Install
+--------
+
+To use this software, first use the make file to install dependencies.
+
+	./make
+
+Run
+--------
+
+Then you should be able to run the software using the run script, since it handles calling the dependent software in the lib directory.
+
+	./run.sh
+
+To run in text input mode:
+
+	./run.sh [-t] [--talk]
+
+To mute system output and provide responses to stdout:
+
+	./run.sh [-m] [--mute]
+
+For details on communicating with the system, see the paper.
+
+
+Examples
+---------
+
+"Add John Glenn is a Republican"
+"Forget John Glenn is a Republican"
+"Remember John Glenn is an astronaut and is a senator."
+"Describe John Glenn"
+"Who is an astronaut and is a senator."
 

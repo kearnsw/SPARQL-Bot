@@ -1,6 +1,6 @@
 #!/bin/bash
 
-stardog query $DATABASE "$1"
+stardog query --reasoning $DATABASE "$1"
 
 #| grep -oPe "\s.*?:.*?\s" | awk -F ':' '{print $0}'
 

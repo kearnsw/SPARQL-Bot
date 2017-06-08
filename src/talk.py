@@ -1,10 +1,8 @@
 #!/usr/bin/env python
 
 from gtts import gTTS
-import os
 import sys
 import subprocess
-from time import sleep
 from tempfile import NamedTemporaryFile
 
 def speak(text):

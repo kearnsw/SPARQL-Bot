@@ -1,0 +1,26 @@
+\begin{thebibliography}{}
+\expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
+
+\bibitem[{Fader et~al.(2011)Fader, Soderland, and Etzioni}]{ReVerb2011}
+Anthony Fader, Stephen Soderland, and Oren Etzioni. 2011.
+\newblock Identifying relations for open information extraction.
+\newblock In {\em Proceedings of the Conference of Empirical Methods in Natural
+  Language Processing ({EMNLP} '11)\/}. Edinburgh, Scotland, UK.
+
+\bibitem[{Google(<year>)}]{freebase}
+Google. <year>.
+\newblock Freebase data dumps.
+\newblock \url{https://developers.google.com/freebase/data}.
+
+\bibitem[{Lewis et~al.(2015)Lewis, He, and Zettlemoyer}]{lewis2015}
+Mike Lewis, Luheng He, and Luke Zettlemoyer. 2015.
+\newblock Joint a* ccg parsing and semantic role labelling.
+\newblock In {\em Empirical Methods in Natural Language Processing\/}.
+
+\bibitem[{Pappu and Rudnicky(2014)}]{Pappu2014}
+Aasish Pappu and Alexander~I. Rudnicky. 2014.
+\newblock {Learning situated knowledge bases through dialog}.
+\newblock {\em Proceedings of the Annual Conference of the International Speech
+  Communication Association, INTERSPEECH\/} (September):120--124.
+
+\end{thebibliography}

@@ -2,6 +2,17 @@
 
 SCRIPT_PATH="`dirname \"$0\"`"
 
+# Stanford Core NLP
+export CLASSPATH=$SCRIPT_PATH/../lib/stanford-ner-2016-10-31
+export STANFORD_MODELS=$SCRIPT_PATH/../lib/stanford-ner-2016-10-31/classifiers
+
+# Stardog
+export STARDOG_HOME="$SCRIPT_PATH/../lib/stardog-5.0-beta"
+export PATH="$PATH:$STARDOG_HOME/bin"
+
+# Application Directory
+export BOT_HOME="$SCRIPT_PATH/.."
+
 TIMESTAMP=$(date "+%Y.%m.%d.%H.%M.%S")
 python $SCRIPT_PATH/../src/main.py "$@" 
 		 

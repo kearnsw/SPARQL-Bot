@@ -8,8 +8,8 @@ AUDIO_FILE = path.join(path.dirname(path.realpath(__file__)), "english.wav")
 def listen():
     print("I'm recording")
     r = sr.Recognizer()
-    with sr.Microphone(device_index=12) as source:
-            r.adjust_for_ambient_noise(source)
+    r.energy_threshold = 4000
+    with sr.Microphone(device_index=12, chunk_size=512) as source:
             print("Say something!")
             audio = r.listen(source)
 
